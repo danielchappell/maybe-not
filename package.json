@@ -1,0 +1,23 @@
+{
+  "name": "maybe-not",
+  "version": "0.1.0",
+  "description": "Functors Applicative, Monads Interfaces and a maybe class.",
+  "main": "bundle.js",
+  "keywords": [
+      "typescript",
+      "monads",
+      "maybe",
+      "errorhandling"
+  ],
+  "author": "Daniel Chappell",
+  "license": "BSD-2-Clause",
+  "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-core": "^6.17.0",
+    "babel-loader": "^6.2.5",
+    "ts-loader": "^0.9.1",
+    "babel-preset-es2015": "^6.16.0",
+    "typescript": "^2.0.3",
+    "webpack": "^1.13.2"
+  }
+}

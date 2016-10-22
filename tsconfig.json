@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "allowJs": false,
+        "module": "commonjs",
+        "target": "es6",
+        "noImplicitAny": false,
+        "sourceMap": false,
+        "strictNullChecks": true
+   },
+   "include": ["src/**/*"]
+}
