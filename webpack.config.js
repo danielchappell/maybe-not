@@ -14,7 +14,7 @@ module.exports = {
         },
         module: {
         loaders: [
-        {test: /\.ts/, include: [path.resolve(__dirname, "src")], loader: 'babel-loader!ts-loader'}
+        {test: /\.ts/, include: [path.resolve(__dirname, "src")], loader: 'babel-loader?presets[]=es2015!ts-loader'}
         ]
     }
 };
