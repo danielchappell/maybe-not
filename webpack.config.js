@@ -6,6 +6,8 @@ module.exports = {
         main:'./src/monads.ts',
     },
     output:{
+            library: 'maybe-not',
+            libraryTarget: 'umd',
             path: __dirname,
             filename: 'bundle.js'
         },
@@ -14,7 +16,7 @@ module.exports = {
         },
         module: {
         loaders: [
-        {test: /\.ts/, include: [path.resolve(__dirname, "src")], loader: 'babel-loader?presets[]=es2015!ts-loader'}
+        {test: /\.ts/, include: [path.resolve(__dirname, "src")], loader: 'babel-loader!ts-loader'}
         ]
     }
 };

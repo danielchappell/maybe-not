@@ -1,8 +1,8 @@
 {
     "compilerOptions": {
         "allowJs": false,
-        "module": "es2015",
-        "target": "es2015",
+        "module": "none",
+        "target": "es6",
         "noImplicitAny": false,
         "sourceMap": false,
         "strictNullChecks": true

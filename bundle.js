@@ -1,4 +1,14 @@
-/******/ (function(modules) { // webpackBootstrap
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else if(typeof exports === 'object')
+		exports["maybe-not"] = factory();
+	else
+		root["maybe-not"] = factory();
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 
@@ -46,125 +56,86 @@
 
 	"use strict";
 
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var Maybe = exports.Maybe = function () {
-	    function Maybe(type, value) {
-	        _classCallCheck(this, Maybe);
-
+	class Maybe {
+	    constructor(type, value) {
 	        this.type = type;
 	        this.value = value;
 	        this.unit = this.pure;
 	    }
-
-	    _createClass(Maybe, [{
-	        key: "fmap",
-	        value: function fmap(fn) {
-
-                if (this.isSomething()) { return Maybe.maybe(fn(this.value));
-	            }
+	    static just(val) {
+	        if (val === undefined || val === null) {
+	            throw new TypeError("You sucker, how did you let this happen!?");
+	        }
+	        return new Maybe("Just", val);
+	    }
+	    static nothing() {
+	        return new Maybe("Nothing");
+	    }
+	    static maybe(val) {
+	        if (val === undefined || val === null) {
 	            return Maybe.nothing();
 	        }
-	    }, {
-	        key: "appl",
-	        value: function appl(fn) {
-	            if (fn.isNothing) {
-	                throw new TypeError("blow the fuk up");
+	        return Maybe.just(val);
+	    }
+	    static all(arr, patterns) {
+	        let fullOfSomethings = true;
+	        let successArgs = arr.map(x => x.do({
+	            something(y) {
+	                return y;
+	            },
+	            nothing() {
+	                fullOfSomethings = false;
 	            }
-	            return this.fmap(fn.unwrap());
-	        }
-	    }, {
-	        key: "pure",
-	        value: function pure(val) {
-	            return Maybe.maybe(val);
-	        }
-	    }, {
-	        key: "bind",
-	        value: function bind(fn) {
-	            return fn(this.value);
-	        }
-	    }, {
-	        key: "isNothing",
-	        value: function isNothing() {
-	            return this.value === undefined || this.value === null;
-	        }
-	    }, {
-	        key: "isSomething",
-	        value: function isSomething() {
-	            return !this.isNothing();
-	        }
-	    }, {
-	        key: "unwrap",
-	        value: function unwrap() {
-	            if (this.isNothing() || this.value === undefined) {
-	                throw new TypeError("come on you guyyyzz");
-	            }
-	            return this.value;
-	        }
-	    }, {
-	        key: "do",
-	        value: function _do(patterns) {
-	            if (this.isSomething()) {
-	                return patterns.something(this.value);
-	            }
+	        }));
+	        if (fullOfSomethings) {
+	            return patterns.something(successArgs);
+	        } else {
 	            return patterns.nothing();
 	        }
-	    }, {
-	        key: "withDefault",
-	        value: function withDefault(fallback) {
-	            return this.isSomething() ? this.unwrap() : fallback;
+	    }
+	    fmap(fn) {
+	        if (this.isSomething()) {
+	            return Maybe.maybe(fn(this.value));
 	        }
-	    }], [{
-	        key: "just",
-	        value: function just(val) {
-	            if (val === undefined || val === null) {
-	                throw new TypeError("You sucker, how did you let this happen!?");
-	            }
-	            return new Maybe("Just", val);
+	        return Maybe.nothing();
+	    }
+	    appl(fn) {
+	        if (fn.isNothing) {
+	            throw new TypeError("blow the fuk up");
 	        }
-	    }, {
-	        key: "nothing",
-	        value: function nothing() {
-	            return new Maybe("Nothing");
+	        return this.fmap(fn.unwrap());
+	    }
+	    pure(val) {
+	        return Maybe.maybe(val);
+	    }
+	    bind(fn) {
+	        return fn(this.value);
+	    }
+	    isNothing() {
+	        return this.value === undefined || this.value === null;
+	    }
+	    isSomething() {
+	        return !this.isNothing();
+	    }
+	    unwrap() {
+	        if (this.isNothing() || this.value === undefined) {
+	            throw new TypeError("come on you guyyyzz");
 	        }
-	    }, {
-	        key: "maybe",
-	        value: function maybe(val) {
-	            if (val === undefined || val === null) {
-	                return Maybe.nothing();
-	            }
-	            return Maybe.just(val);
+	        return this.value;
+	    }
+	    do(patterns) {
+	        if (this.isSomething()) {
+	            return patterns.something(this.value);
 	        }
-	    }, {
-	        key: "all",
-	        value: function all(arr, patterns) {
-	            var fullOfSomethings = true;
-	            var successArgs = arr.map(function (x) {
-	                return x.do({
-	                    something: function something(y) {
-	                        return y;
-	                    },
-	                    nothing: function nothing() {
-	                        fullOfSomethings = false;
-	                    }
-	                });
-	            });
-	            if (fullOfSomethings) {
-	                return patterns.something(successArgs);
-	            } else {
-	                return patterns.nothing();
-	            }
-	        }
-	    }]);
-
-	    return Maybe;
-	}();
+	        return patterns.nothing();
+	    }
+	    withDefault(fallback) {
+	        return this.isSomething() ? this.unwrap() : fallback;
+	    }
+	}
+	exports.Maybe = Maybe;
 
 /***/ }
-/******/ ]);
+/******/ ])
+});
+;
