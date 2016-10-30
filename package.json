@@ -1,8 +1,12 @@
 {
   "name": "maybe-not",
-  "version": "0.2.1",
+  "version": "0.4.0",
   "description": "Functors Applicative, Monads Interfaces and a maybe class.",
-  "main": "bundle.js",
+  "main": "./dist/maybenot.js",
+  "types": "./dist/maybenot.d.ts",
+  "scripts": {
+    "prepublish": "webpack"
+  },
   "keywords": [
       "typescript",
       "monads",

@@ -1,6 +1,8 @@
 {
     "compilerOptions": {
         "allowJs": false,
+        "declaration":true, 
+        "declarationDir": ".",
         "module": "none",
         "target": "es6",
         "noImplicitAny": false,

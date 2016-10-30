@@ -1,18 +1,18 @@
-interface Matcher<A,B> {
+export declare interface Matcher<A,B> {
     something(A): B;
     nothing(): B;
 }
 
-interface Functor<T> {
+export declare interface Functor<T> {
     fmap<A>(fn: (T) => A): Maybe<A>;
 }
 
-interface Applicative<T> extends Functor<T> {
+export declare interface Applicative<T> extends Functor<T> {
     pure<A>(val: A): Applicative<A>;
     appl<A>(fn: Applicative<(T) => A>): Applicative<A>;
 }
 
-interface Monad<T> extends Applicative<T> {
+export declare interface Monad<T> extends Applicative<T> {
     unit<A>(val: A): Monad<A>;
     bind<A,B>(fn: (A) => Monad<B>): Monad<B>;
 }
