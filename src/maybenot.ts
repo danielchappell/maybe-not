@@ -1,22 +1,22 @@
 export declare interface Matcher<A,B> {
-    something(A): B;
+    something(arg:A): B;
     nothing(): B;
 }
 
 export declare interface Functor<T> {
-    fmap<B>(fn: (T) => B): Maybe<B>;
+    fmap<B>(fn: (arg: T) => B): Maybe<B>;
 }
 
 
 export declare interface Applicative<T> extends Functor<T> {
-    ap<A>(fn: Applicative<(T) => A>): Applicative<A>;
+    ap<A>(fn: Applicative<(arg: T) => A>): Applicative<A>;
 }
 
 export declare interface Monad<T> extends Applicative<T> {
-    bind<A>(fn: (T) => Monad<A>): Monad<A>;
+    bind<A>(fn: (arg: T) => Monad<A>): Monad<A>;
 }
 
-export declare type StateFn<S,A> = (S) => [A, S];
+export declare type StateFn<S,A> = (arg: S) => [A, S];
 export class State<S,A> {
     constructor(stateFn: StateFn<S,A>) {
         this.runState = stateFn;
@@ -28,26 +28,26 @@ export class State<S,A> {
     static next<S,A>(val: A, passedState: S) {
         return new State((state: S) => [val, passedState]);
     };
-    bind<B>(fn: (A ) => State<S,B>): State<S,B> {
+    bind<B>(fn: (arg: A) => State<S,B>): State<S,B> {
         return new State<S,B>((state: S) => {
             let [newVal, newState] = this.runState(state);
             return fn(newVal).runState(newState);
         });
     };
-    map<B>(fn: (A) => B): State<S,B> {
+    map<B>(fn: (arg: A) => B): State<S,B> {
         return new State<S,B>((state: S) => {
             let [newVal, newState] = this.runState(state);
             return [fn(newVal), newState];
         });
     };
-    ap<B,F>(fnM: State<S,(A) => B>): State<S,B> {
+    ap<B,F>(fnM: State<S,(arg: A) => B>): State<S,B> {
         return new State<S,B>((state: S) => {
-            let [fn, newState]: [(A) => B, S] = fnM.runState(state);
+            let [fn, newState]: [(arg: A) => B, S] = fnM.runState(state);
             let [newVal, finalState] = this.runState(newState);
             return [fn(newVal), finalState];
         });
     };
-    modify(modFn: (S) => S): State<S, null> {
+    modify(modFn: (arg: S) => S): State<S, null> {
         return new State((state) => [null, modFn(state)]);
     };
     get(): State<S,S> {
