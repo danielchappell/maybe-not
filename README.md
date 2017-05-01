@@ -5,7 +5,6 @@ another monad thingy
 ## To Build
 
 ```
-npm install
-webpack
+yarn
 ```
 

@@ -2,12 +2,10 @@
     "compilerOptions": {
         "allowJs": false,
         "declaration":true, 
-        "declarationDir": ".",
-        "module": "none",
-        "target": "es6",
-        "noImplicitAny": false,
-        "sourceMap": false,
-        "strictNullChecks": true
-   },
-   "include": ["src/**/*"]
+        "declarationDir": "./dist",
+        "target": "ESNext",
+        "strict": true,
+        "outDir": "./dist"
+    },
+    "include": ["src/**/*"]
 }

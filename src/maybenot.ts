@@ -4,18 +4,60 @@ export declare interface Matcher<A,B> {
 }
 
 export declare interface Functor<T> {
-    fmap<A>(fn: (T) => A): Maybe<A>;
+    fmap<B>(fn: (T) => B): Maybe<B>;
 }
 
+
 export declare interface Applicative<T> extends Functor<T> {
-    pure<A>(val: A): Applicative<A>;
-    appl<A>(fn: Applicative<(T) => A>): Applicative<A>;
+    ap<A>(fn: Applicative<(T) => A>): Applicative<A>;
 }
 
 export declare interface Monad<T> extends Applicative<T> {
-    unit<A>(val: A): Monad<A>;
-    bind<A,B>(fn: (A) => Monad<B>): Monad<B>;
+    bind<A>(fn: (T) => Monad<A>): Monad<A>;
 }
+
+export declare type StateFn<S,A> = (S) => [A, S];
+export class State<S,A> {
+    constructor(stateFn: StateFn<S,A>) {
+        this.runState = stateFn;
+    };
+    runState: StateFn<S,A>;
+    static unit<S,A>(val: A) {
+        return new State((state: S) => [val, state]);
+    };
+    static next<S,A>(val: A, passedState: S) {
+        return new State((state: S) => [val, passedState]);
+    };
+    bind<B>(fn: (A ) => State<S,B>): State<S,B> {
+        return new State<S,B>((state: S) => {
+            let [newVal, newState] = this.runState(state);
+            return fn(newVal).runState(newState);
+        });
+    };
+    map<B>(fn: (A) => B): State<S,B> {
+        return new State<S,B>((state: S) => {
+            let [newVal, newState] = this.runState(state);
+            return [fn(newVal), newState];
+        });
+    };
+    ap<B,F>(fnM: State<S,(A) => B>): State<S,B> {
+        return new State<S,B>((state: S) => {
+            let [fn, newState]: [(A) => B, S] = fnM.runState(state);
+            let [newVal, finalState] = this.runState(newState);
+            return [fn(newVal), finalState];
+        });
+    };
+    modify(modFn: (S) => S): State<S, null> {
+        return new State((state) => [null, modFn(state)]);
+    };
+    get(): State<S,S> {
+        return new State((state) => [state, state]);
+    };
+    put(newState: S): State<S, null> {
+        return new State((state) => [null, newState]);
+    }
+}
+
 
 export class Maybe<T> implements Monad<T> {
     constructor(private type: "Just" | "Nothing", private value?: T) {}
@@ -58,9 +100,9 @@ export class Maybe<T> implements Monad<T> {
         }
         return Maybe.nothing<B>();
     }
-    appl<A>(fn: Maybe<(T) => A>): Maybe<A> {
+    ap<A>(fn: Maybe<(T) => A>): Maybe<A> {
         if (fn.isNothing) {
-            throw new TypeError("blow the fuk up");
+            return Maybe.nothing<A>();
         }
         return this.fmap(fn.unwrap());
     }
@@ -97,4 +139,5 @@ export class Maybe<T> implements Monad<T> {
         return this.isSomething() ? this.unwrap() : fallback;
     }
 }
+
 
