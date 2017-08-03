@@ -1,21 +1,26 @@
 {
-  "name": "maybe-not",
-  "version": "0.5.0",
-  "description": "Functors Applicative, Monads Interfaces and a maybe class.",
-  "main": "./dist/maybenot.js",
-  "types": "./dist/maybenot.d.ts",
-  "scripts": {
-    "prepublish": "tsc"
-  },
-  "keywords": [
-    "typescript",
-    "monads",
-    "maybe",
-    "errorhandling"
-  ],
-  "author": "Daniel Chappell",
-  "license": "BSD-2-Clause",
-  "devDependencies": {
-    "typescript": "^2.3"
-  }
+    "name": "maybe-not",
+    "version": "0.5.0",
+    "description": "Functors Applicative, Monads Interfaces and a maybe class.",
+    "main": "./dist/maybenot.js",
+    "types": "./dist/maybenot.d.ts",
+    "scripts": {
+        "test": "mocha  && rm -rf test",
+        "test:auto": "mocha --watch",
+        "start": "webpack-dev-server"
+    },
+    "keywords": [
+        "typescript",
+        "monads",
+        "maybe",
+        "errorhandling"
+    ],
+    "author": "Daniel Chappell",
+    "license": "BSD-2-Clause",
+    "devDependencies": {
+        "chai": "^4.1.0",
+        "mocha": "^3.5.0",
+        "ts-node": "^3.3.0",
+        "typescript": "^2.3"
+    }
 }
