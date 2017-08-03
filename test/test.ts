@@ -140,20 +140,51 @@ describe('Maybe Class', function() {
 
             describe('#ap(maybeFn)', function() {
                 it('should map inner function if both Maybe(value) and Maybe(Fn) are "FULL"', function() {
+                    let mFn = Maybe.just((x: number) => x + 1);
+                    let mVal = Maybe.just(4);
 
-                }
+                    expect(mVal.ap(mFn).withDefault(0)).to.equal(5);
+                });
+
+
+
+                it('should not map inner function if either Maybe(value) or Maybe(Fn) are not "FULL"', function() {
+                    let mFn: Maybe<(number) => number> = Maybe.just((x: number) => x + 1);
+                    let nFn: Maybe<(number) => number> = Maybe.nothing<(number) => number>();
+                    let nVal = Maybe.nothing<number>();
+                    let mVal = Maybe.just(4);
+
+                    expect(nVal.ap(mFn).withDefault(0)).to.equal(0);
+                    expect(mVal.ap(nFn).withDefault(0)).to.equal(0);
+                });
 
             });
 
 
             describe('#bind(fnReturningMaybe)', function() {
+                it('if "FULL" should apply the function and flatten the resulting nested maybe', function() {
+                    type Person = {name?: string, seat: number};
+                    type Letter = {message: string};
+                    let makeCustomWelcome = (person: Person): Maybe<Letter> => {
+                        return person.name ? Maybe.just({message: `Welcome ${person.name} to seat ${person.seat}`}) : Maybe.nothing<Letter>();
+                    }
+                    let movieWatcher: Maybe<Person> = Maybe.just({name: 'Bob', seat: 42});
+                    let customSeatLetter: Maybe<Letter> = movieWatcher.bind(makeCustomWelcome);
 
-
+                    expect(customSeatLetter.withDefault({message: ''}).message).to.equal('Welcome Bob to seat 42');
+                });
             });
 
             describe('#withDefault(fallbackOfSameType)', function() {
-
-
+                it('if "FULL" returns inner value (unwrapping the maybe)', function() {
+                    let mNum = Maybe.just(5); 
+                    expect(mNum.withDefault(0)).to.equal(5);
+                });
+                
+                it('if "EMPTY" returns provided default which should be the same type as the interal value', function() {
+                    let nNum = Maybe.nothing<number>(); 
+                    expect(nNum.withDefault(4)).to.equal(4);
+                });
             });
         });
     });
