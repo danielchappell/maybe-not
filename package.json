@@ -1,9 +1,9 @@
 {
-    "name": "maybe-not",
+    "name": "call-me-maybe",
     "version": "0.6.0",
-    "description": "Functors Applicative, Monads Interfaces and a maybe class.",
-    "main": "./dist/maybenot.js",
-    "types": "./dist/maybenot.d.ts",
+    "description": "Maybe you should use this instead of nullable types..",
+    "main": "./dist/call-me-maybe.js",
+    "types": "./dist/call-me-maybe.d.ts",
     "scripts": {
         "build": "rm -rf dist/ && tsc",
         "test": "mocha && rm -rf test",
