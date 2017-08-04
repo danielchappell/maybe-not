@@ -6,6 +6,7 @@
     "types": "./dist/call-me-maybe.d.ts",
     "scripts": {
         "build": "rm -rf dist/ && tsc",
+        "prepublish": "npm build",
         "test": "mocha && rm -rf test",
         "test:auto": "mocha --watch"
     },
