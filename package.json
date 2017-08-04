@@ -1,6 +1,6 @@
 {
     "name": "call-me-maybe",
-    "version": "0.6.0",
+    "version": "0.7.0",
     "description": "Maybe you should use this instead of nullable types..",
     "main": "./dist/call-me-maybe.js",
     "types": "./dist/call-me-maybe.d.ts",
