@@ -1,4 +1,4 @@
-# maybe-not
+# Call Me Maybe
 another monad thingy
 
 
@@ -6,5 +6,7 @@ another monad thingy
 
 ```
 yarn
+
+npm build
 ```
 
