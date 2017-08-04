@@ -7,8 +7,7 @@
     "scripts": {
         "build": "rm -rf dist/ && tsc",
         "test": "mocha && rm -rf test",
-        "test:auto": "mocha --watch",
-        "start": "webpack-dev-server"
+        "test:auto": "mocha --watch"
     },
     "keywords": [
         "typescript",
