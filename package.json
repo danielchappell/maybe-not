@@ -1,11 +1,12 @@
 {
     "name": "maybe-not",
-    "version": "0.5.0",
+    "version": "0.6.0",
     "description": "Functors Applicative, Monads Interfaces and a maybe class.",
     "main": "./dist/maybenot.js",
     "types": "./dist/maybenot.d.ts",
     "scripts": {
-        "test": "mocha  && rm -rf test",
+        "build": "rm -rf dist/ && tsc",
+        "test": "mocha && rm -rf test",
         "test:auto": "mocha --watch",
         "start": "webpack-dev-server"
     },
