@@ -11,7 +11,9 @@ export declare interface Monad<T> extends Applicative<T> {
 }
 
 export class Maybe<T> implements Monad<T> {
+
     constructor(private type: "Just" | "Nothing", private value?: T) {}
+
     static just<A>(val: A) {
         if (val === undefined || val === null) {
             throw new TypeError('Value passed to just must exist!');
@@ -62,7 +64,7 @@ export class Maybe<T> implements Monad<T> {
     }
 
     map<B>(fn: (T) => B | undefined | null): Maybe<B> {
-        if (this.isSomething()) {
+        if (this.hasSomething) {
             return Maybe.maybe(fn(this.value));
         }
         return Maybe.nothing<B>();
@@ -77,14 +79,14 @@ export class Maybe<T> implements Monad<T> {
     }
 
     withDefault(fallback: T): T {
-        return this.isSomething() ? this.value : fallback;
+        return this.hasSomething ? this.value : fallback;
     }
 
-    private isNothing(): boolean {
+    get hasNothing(): boolean {
         return this.value === undefined || this.value === null;
     }
-    private isSomething(): boolean {
-        return !this.isNothing();
+    get hasSomething(): boolean {
+        return !this.hasNothing;
     }
 }
 

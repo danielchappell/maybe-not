@@ -1,13 +1,13 @@
 {
-    "name": "call-me-maybe",
-    "version": "0.7.0",
+    "name": "maybe-not",
+    "version": "1.0.0-beta1",
     "description": "Maybe you should use this instead of nullable types..",
-    "main": "./dist/call-me-maybe.js",
-    "types": "./dist/call-me-maybe.d.ts",
+    "main": "./dist/maybe-not.js",
+    "types": "./dist/maybe-not.d.ts",
     "scripts": {
         "build": "rm -rf dist/ && tsc",
         "prepublish": "npm build",
-        "test": "mocha && rm -rf test",
+        "test": "mocha",
         "test:auto": "mocha --watch"
     },
     "keywords": [
