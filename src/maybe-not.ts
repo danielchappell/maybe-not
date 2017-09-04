@@ -12,18 +12,18 @@ export interface Monad<T> extends Applicative<T> {
 
 export class Maybe<T> implements Monad<T> {
 
-    constructor(private type: "Just" | "Nothing", private value?: T) {}
+    constructor(private value?: T | undefined) {}
 
     static just<A>(val: A) {
         if (val === undefined || val === null) {
             throw new TypeError('Value passed to just must exist!');
         }
 
-       return new Maybe("Just", val);
+       return new Maybe(val);
     }
 
     static nothing<A>(): Maybe<A> {
-        return new Maybe<A>("Nothing");
+        return new Maybe<A>();
     }
 
     static maybe<A>(val: A | null | undefined): Maybe<A> {
