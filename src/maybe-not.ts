@@ -1,12 +1,12 @@
-export declare interface Functor<T> {
+export interface Functor<T> {
     map<B>(fn: (arg: T) => B): Maybe<B>;
 }
 
-export declare interface Applicative<T> extends Functor<T> {
+export interface Applicative<T> extends Functor<T> {
     ap<A>(fn: Applicative<(arg: T) => A>): Applicative<A>;
 }
 
-export declare interface Monad<T> extends Applicative<T> {
+export interface Monad<T> extends Applicative<T> {
     bind<A>(fn: (arg: T) => Monad<A>): Monad<A>;
 }
 
