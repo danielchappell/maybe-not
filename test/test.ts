@@ -1,8 +1,6 @@
 import { Maybe } from '../src/maybe-not';
 import { expect } from 'chai';
 
-declare var describe: any;
-declare var it: any;
 
 
 describe('Maybe Class', function() {
