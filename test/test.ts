@@ -149,8 +149,8 @@ describe('Maybe Class', function() {
 
 
                 it('should not map inner function if either Maybe(value) or Maybe(Fn) are not "FULL"', function() {
-                    let mFn: Maybe<(number) => number> = Maybe.just((x: number) => x + 1);
-                    let nFn: Maybe<(number) => number> = Maybe.nothing<(number) => number>();
+                    let mFn: Maybe<(n: number) => number> = Maybe.just((n: number) => n + 1);
+                    let nFn: Maybe<(n: number) => number> = Maybe.nothing<(n: number) => number>();
                     let nVal = Maybe.nothing<number>();
                     let mVal = Maybe.just(4);
 
@@ -184,34 +184,6 @@ describe('Maybe Class', function() {
                 it('if "EMPTY" returns provided default which should be the same type as the interal value', function() {
                     let nNum = Maybe.nothing<number>(); 
                     expect(nNum.withDefault(4)).to.equal(4);
-                });
-            });
-
-            describe('#hasSomething', function() {
-                it('should be true if Maybe is "FULL" otherwise return false', function() {
-                    let something = Maybe.just('something');
-                    let alsoSomething = Maybe.maybe('also something');
-                    let nothing = Maybe.nothing<string>();
-                    let alsoNothing = Maybe.maybe<string>(undefined);
-
-                    expect(something.hasSomething).to.be.true
-                    expect(alsoSomething.hasSomething).to.be.true;
-                    expect(nothing.hasSomething).to.be.false;
-                    expect(alsoNothing.hasSomething).to.be.false;
-                });
-            });
-
-            describe('#hasNothing', function() {
-                it('should be true if Maybe is nothing otherwise return true..if maybe is "FULL"', function() {
-                    let something = Maybe.just('something');
-                    let alsoSomething = Maybe.maybe('also something');
-                    let nothing = Maybe.nothing<string>();
-                    let alsoNothing = Maybe.maybe<string>(undefined);
-
-                    expect(something.hasNothing).to.be.false;
-                    expect(alsoSomething.hasNothing).to.be.false;
-                    expect(nothing.hasNothing).to.be.true;
-                    expect(alsoNothing.hasNothing).to.be.true;
                 });
             });
         });
