@@ -2,6 +2,14 @@
 # yarn lockfile v1
 
 
+"@types/chai@^4.0.4":
+  version "4.0.4"
+  resolved "https://registry.npmjs.org/@types/chai/-/chai-4.0.4.tgz#fe86315d9a66827feeb16f73bc954688ec950e18"
+
+"@types/mocha@^2.2.42":
+  version "2.2.42"
+  resolved "https://registry.npmjs.org/@types/mocha/-/mocha-2.2.42.tgz#ab769f51d37646b6fe8d4a086a98c285b1fab3f5"
+
 ansi-styles@^3.1.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-3.2.0.tgz#c159b8d5be0f9e5a6f346dab94f16ce022161b88"
