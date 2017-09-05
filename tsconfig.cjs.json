@@ -1,13 +1,12 @@
 {
     "compilerOptions": {
-        "target": "es2017",
-        "module": "es2015",
+        "target": "es5",
+        "module": "commonjs",
         "strict": true,
         "moduleResolution": "node",
         "newLine": "LF",
-        "outDir": "dist/modules/es2017",
-        "declarationDir": "dist/types",
-        "declaration": true,
+        "outDir": "dist/cjs/es5",
+        "declaration": false,
         "noUnusedLocals": true,
         "sourceMap": true
     },

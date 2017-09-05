@@ -1,14 +1,17 @@
 {
     "name": "maybe-not",
-    "version": "1.0.0-beta1",
+    "version": "0.0.0",
     "description": "Maybe you should use this instead of nullable types..",
-    "main": "./dist/maybe-not.js",
-    "types": "./dist/maybe-not.d.ts",
+    "main": "./dist/cjs/es5/maybe-not.js",
+    "module": "./dist/modules/es2017/maybe-not.js",
+    "types": "./dist/types/maybe-not.d.ts",
     "scripts": {
-        "build": "rm -rf dist/ && tsc",
+        "build": "rm -rf dist/ && tsc && tsc -p tsconfig.cjs.json",
+        "build:test": "rm -rf tmp/ && tsc -p tsconfig.test.json",
         "prepublish": "npm build",
-        "test": "mocha",
-        "test:auto": "mocha --watch"
+        "test": "npm run build:test && mocha",
+        "test:auto": "mocha --watch",
+        "problems": "tsc --noEmit"
     },
     "keywords": [
         "typescript",
@@ -18,6 +21,9 @@
     ],
     "author": "Daniel Chappell",
     "license": "BSD-2-Clause",
+    "files": [
+        "dist"
+    ],
     "devDependencies": {
         "@types/chai": "^4.0.4",
         "@types/mocha": "^2.2.42",
