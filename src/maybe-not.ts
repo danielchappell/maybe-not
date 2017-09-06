@@ -62,7 +62,7 @@ export class Maybe<T> implements Monad<T> {
     }
 
     map<U>(fn: (value: T) => U | undefined | null): Maybe<U> {
-        if (this.value !== undefined && this.value !== null) {
+        if (this.value !== undefined) {
             return Maybe.maybe(fn(this.value));
         }
         return Maybe.nothing<U>();
@@ -77,7 +77,21 @@ export class Maybe<T> implements Monad<T> {
     }
 
     withDefault(fallback: T): T {
-        return this.value !== undefined && this.value !== null ? this.value : fallback;
+        return this.value !== undefined ? this.value : fallback;
+    }
+
+    get hasNothing(): boolean {
+        return this.value === undefined;
+    }
+
+    get hasSomething(): boolean {
+        return !this.hasNothing;
+    }
+
+    unsafeElse(fn: () => void): void {
+        if (this.hasNothing) {
+            fn();
+        }
     }
 }
 
