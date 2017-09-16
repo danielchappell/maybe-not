@@ -68,6 +68,14 @@ export class Maybe<T> implements Monad<T> {
         return Maybe.nothing<U>();
     }
 
+    alt(elseValue: Maybe<T>): Maybe<T> {
+        return this.value !== undefined ? this : elseValue;
+    }
+
+    altMap(elseFn: () => Maybe<T>): Maybe<T> {
+        return this.value !== undefined ? this : elseFn();
+    }
+
     ap<U>(mFn: Maybe<(value: T) => U>): Maybe<U> {
         return mFn.bind(fn => this.map(fn));
     }
@@ -78,6 +86,10 @@ export class Maybe<T> implements Monad<T> {
 
     withDefault(fallback: T): T {
         return this.value !== undefined ? this.value : fallback;
+    }
+
+    withDefaultFn(fallbackFn: () => T): T {
+        return this.value !== undefined ? this.value : fallbackFn();
     }
 
     get hasNothing(): boolean {

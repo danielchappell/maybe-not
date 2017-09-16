@@ -171,6 +171,19 @@ describe('Maybe Class', function () {
                 });
             });
 
+            describe('#withDefaultFn(FallbackFn)', function () {
+                it('if "FULL" returns inner value (unwrapping the maybe)', function () {
+                    let mNum = Maybe.just(5);
+                    expect(mNum.withDefaultFn(() => 0)).to.equal(5);
+                });
+
+                it('if "EMPTY" returns value of the executed thunk(fn) which should be the same type as the interal value', function () {
+                    let nNum = Maybe.nothing<number>();
+                    expect(nNum.withDefaultFn(() => 4)).to.equal(4);
+                });
+            });
+
+
             describe('#hasSomething', function () {
                 it('should be true if Maybe is "FULL" otherwise return false', function () {
                     let something = Maybe.just('something');
@@ -224,6 +237,24 @@ describe('Maybe Class', function () {
                     expect(mutations).to.eq(2);
                 });
             });
+
+            describe('#alt', function() {
+                it('returns provided value if callee is "EMPTY"', function() {
+                    expect(Maybe.just(4).alt(Maybe.just(5)).withDefault(0)).to.equal(4);
+                    expect(Maybe.nothing().alt(Maybe.just(5)).withDefault(0)).to.equal(5);
+                    expect(Maybe.nothing().alt(Maybe.nothing()).withDefault(0)).to.equal(0);
+                    expect(Maybe.just(1).alt(Maybe.nothing()).withDefault(0)).to.equal(1);
+                });
+            });
+            describe('#altMap', function () {
+                it('works just like alt but takes a thunk(fn)', function() {
+                    expect(Maybe.just(4).altMap(() => Maybe.just(5)).withDefault(0)).to.equal(4);
+                    expect(Maybe.nothing().altMap(() => Maybe.just(5)).withDefault(0)).to.equal(5);
+                    expect(Maybe.nothing().altMap(() => Maybe.nothing()).withDefault(0)).to.equal(0);
+                    expect(Maybe.just(1).altMap(() => Maybe.nothing()).withDefault(0)).to.equal(1);
+                });
+            });
+
         });
     });
 });
