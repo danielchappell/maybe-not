@@ -1,6 +1,6 @@
 {
     "name": "maybe-not",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "Maybe you should use this instead of nullable types..",
     "main": "./dist/cjs/es5/maybe-not.js",
     "module": "./dist/modules/es2017/maybe-not.js",
