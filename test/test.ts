@@ -88,6 +88,19 @@ describe('Maybe Class', function () {
                 });
             });
 
+            describe('#Maybe.justMap(fn, arr) allows mapping with maybe as predicate', function() {
+                it('should map the fn over the array, but return only "FULL" results', function() {
+                    let numbers1 = [NaN, 4, NaN, 10];
+                    let numbers2 = [5, NaN, 40, NaN, NaN];
+                    let doubleReals = (num: number): Maybe<number> => {
+                        return isNaN(num) ? Maybe.nothing<number>() : Maybe.just(num * 2);
+                    };
+
+                    expect(Maybe.justMap(doubleReals, numbers1)).to.include.ordered.members([8, 20]);
+                    expect(Maybe.justMap(doubleReals, numbers2)).to.include.ordered.members([10, 80]);
+                });
+            });
+
             describe('#Maybe.lift(singleArgumentFn)', function () {
                 it('should take a function with a single argument and return value and return a function with argument and return value as maybes', function () {
                     let addOne = (x: number): number => x + 1;

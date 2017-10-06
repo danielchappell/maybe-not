@@ -49,6 +49,14 @@ export class Maybe<T> implements Monad<T> {
         return Maybe.sequence(arr).map(items => items.map(fn));
     }
 
+    static justMap<A, B>(fn: (input: A) => Maybe<B>, arr: A[]): B[] {
+        return arr.reduce((acc: B[], item) => {
+            const mValue = fn(item);
+
+            return mValue.value !== undefined ?  acc.concat(mValue.value) : acc;
+            }, []);
+    }
+
     static lift<A, B>(fn: (input: A) => B): (mX: Maybe<A>) => Maybe<B> {
         return mX => mX.map(fn);
     }
