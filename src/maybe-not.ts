@@ -57,6 +57,15 @@ export class Maybe<T> implements Monad<T> {
             }, []);
     }
 
+    static filterSomethings<A>(arr: Array<Maybe<A>>): A[] {
+        return arr.reduce((acc, xM) => {
+            if (xM.value) {
+                acc.push(xM.value)
+            }
+            return acc;
+        }, [] as Array<A>);
+    }
+
     static lift<A, B>(fn: (input: A) => B): (mX: Maybe<A>) => Maybe<B> {
         return mX => mX.map(fn);
     }
