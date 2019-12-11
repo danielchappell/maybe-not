@@ -8,7 +8,6 @@
     "scripts": {
         "build": "rm -rf dist/ && tsc && tsc -p tsconfig.cjs.json",
         "build:test": "rm -rf tmp/ && tsc -p tsconfig.test.json",
-        "prepublish": "npm build",
         "test": "npm run build:test && mocha",
         "test:auto": "mocha --watch",
         "problems": "tsc --noEmit"
@@ -25,11 +24,11 @@
         "dist"
     ],
     "devDependencies": {
-        "@types/chai": "^4.0.4",
+        "@types/chai": "4.0.4",
         "@types/mocha": "^2.2.42",
-        "chai": "^4.1.0",
+        "chai": "4.1.0",
         "mocha": "^3.5.0",
         "ts-node": "^3.3.0",
-        "typescript": "^2.3"
+        "typescript": "2.3"
     }
 }
