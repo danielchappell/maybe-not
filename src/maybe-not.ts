@@ -78,11 +78,31 @@ export class Maybe<T> implements Monad<T> {
         return (mX, mY, mZ) => Maybe.sequence([mX, mY, mZ]).map(ms => fn(ms[0], ms[1], ms[2]));
     }
 
+    static toPromise<A>(maybe: Maybe<A>): Promise<A> {
+        if (maybe.hasSomething) {
+            return Promise.resolve(maybe.value!);
+        } else {
+            return Promise.reject();
+        }
+    }
+
     map<U>(fn: (value: T) => U | undefined | null): Maybe<U> {
         if (this.value !== undefined) {
             return Maybe.maybe(fn(this.value));
         }
         return Maybe.nothing<U>();
+    }
+
+    async asyncMap<U>(fn: (value: T) => Promise<U | undefined | null>): Promise<U> {
+       if (this.value !== undefined) {
+           return fn(this.value).then(x => {
+             if (x === undefined || x === null) {
+                 throw 'Promise Conversion from a Maybe.Nothing';
+             }
+             return x;
+           });
+       } 
+       return Promise.reject();
     }
 
     alt(elseValue: Maybe<T>): Maybe<T> {

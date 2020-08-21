@@ -124,6 +124,21 @@ describe('Maybe Class', function () {
                     expect(liftedAddThree(Maybe.just(1), Maybe.just(2), Maybe.just(5)).withDefault(0)).to.equal(8);
                 });
             });
+
+            describe('#Maybe.toPromise(maybeInstance)', function () {
+                it('should convert maybe to promise that resolves if maybe is something', function (done) {
+                    const aGoodMaybe = Maybe.just(5);
+                    Maybe.toPromise(aGoodMaybe).then(() => done());
+                });
+
+                it('should convert maybe to promise that rejects if maybe is nothing', function (done) {
+                    const aGoodMaybe = Maybe.nothing();
+                    Maybe.toPromise(aGoodMaybe)
+                        .then(() => done('Promise should not resolve since maybe was nothing'))
+                        .catch(() => done())
+                });
+ 
+            })
         });
 
         describe('Instance Methods', function () {
@@ -135,6 +150,48 @@ describe('Maybe Class', function () {
 
                 it('should apply function only if Maybe is not "EMPTY" otherwise return an "EMPTY" Maybe', function () {
                     expect(Maybe.nothing<number[]>().map(x => x.concat([2, 3, 4])).withDefault([])).to.include.ordered.members([]);
+                });
+            });
+
+            describe('#asyncMap(fn)', function() {
+                it('should apply the function only if the maybe is something and return a promise if value is something', function (done) {
+                    const aSomething = Maybe.just(3)
+                    aSomething.asyncMap(val => {
+                        expect(val).to.equal(3);
+                        return Promise.resolve(3+2);
+                    }).then(() => {
+                        done();
+                    });
+                });
+
+                it('should apply the function only if the maybe is something and but return a promise rejection if resolved value is nothing', function (done) {
+                    const aSomething = Maybe.just(3)
+                    aSomething.asyncMap(val => {
+                        expect(val).to.equal(3);
+                        return Promise.resolve(undefined);
+                    })
+                    .then(() => {
+                        done('this should not run');
+                    })
+                    .catch(() => {
+                        done();
+                    });
+                });
+
+
+
+               it('should not apply the function when the maybe is nothing and return a promise rejection', function (done) {
+                    const aSomething = Maybe.nothing()
+                    aSomething.asyncMap(val => {
+                        //this should never run
+                        return Promise.resolve(1)
+                    })
+                    .then(() => {
+                        done('this should not run');
+                    })
+                    .catch(() => {
+                        done();
+                    });
                 });
             });
 
