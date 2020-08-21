@@ -8,7 +8,7 @@
     "scripts": {
         "build": "rm -rf dist/ && tsc && tsc -p tsconfig.cjs.json",
         "build:test": "rm -rf tmp/ && tsc -p tsconfig.test.json",
-        "test": "npm run build:test && mocha",
+        "test": "yarn build:test && mocha",
         "test:auto": "mocha --watch",
         "problems": "tsc --noEmit"
     },
@@ -29,6 +29,6 @@
         "chai": "4.1.0",
         "mocha": "^3.5.0",
         "ts-node": "^3.3.0",
-        "typescript": "2.3"
+        "typescript": "4.0"
     }
 }
