@@ -32,7 +32,7 @@ let currentAvg = averageCompletedGrades(gradeBook.map(Maybe.maybe)); // returns 
 
 ##### Assertions
   1. Functions should always return the same type
-  2. If you have say something is a given type, it should be.
+  2. If you said something is a given type, it should be.
   3. Uncertainty should be explicit for clean code and readability.
   
 
