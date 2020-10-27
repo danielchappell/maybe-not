@@ -93,7 +93,7 @@ export class Maybe<T> implements Monad<T> {
         return Maybe.nothing<U>();
     }
 
-    async asyncMap<U>(fn: (value: T) => Promise<U | undefined | null>): Promise<U> {
+    asyncMap<U>(fn: (value: T) => Promise<U | undefined | null>): Promise<U> {
        if (this.value !== undefined) {
            return fn(this.value).then(x => {
              if (x === undefined || x === null) {
